@@ -12,10 +12,12 @@ import { TimeGroup } from '../time-group';
 export interface VideoLayoutProps {
   groupedEp?: any;
   thumbnails?: string;
-  subtitles?: any
+  subtitles?: any;
+  onNextEpisodeClick?: () => void;
+  onPreviousEpisodeClick?: () => void;
 }
 
-export function VideoLayout({ groupedEp, thumbnails, subtitles }: VideoLayoutProps) {
+export function VideoLayout({ groupedEp, thumbnails, subtitles, onNextEpisodeClick, onPreviousEpisodeClick }: VideoLayoutProps) {
   return (
     <>
       <Gestures />
@@ -25,7 +27,7 @@ export function VideoLayout({ groupedEp, thumbnails, subtitles }: VideoLayoutPro
       >
         <Controls.Group className="flex justify-between items-center w-full px-1 pt-1">
           <div className='flex sm:hidden items-center justify-between w-full'>
-          {/* <Buttons.ChromeCast tooltipPlacement='top'/> */}
+          {/* Removed commented out Buttons.ChromeCast */}
           <div className='flex-1'></div>
           <div className="flex sm:hidden items-center">
             {subtitles?.length>0 && (
@@ -75,6 +77,7 @@ export function VideoLayout({ groupedEp, thumbnails, subtitles }: VideoLayoutPro
             <Buttons.PlayNextButton
               groupedEp={groupedEp}
               tooltipPlacement="top end"
+              onNextEpisodeClick={onNextEpisodeClick} // Added
             />
           </>
         </Controls.Group>
@@ -89,12 +92,14 @@ export function VideoLayout({ groupedEp, thumbnails, subtitles }: VideoLayoutPro
             offset={0}
             groupedEp={groupedEp}
             tooltipPlacement="top start"
+            onPreviousEpisodeClick={onPreviousEpisodeClick} // Added
           />
           <Buttons.Play tooltipPlacement="top start" />
           <Buttons.NextEpisode
             offset={0}
             groupedEp={groupedEp}
             tooltipPlacement="top"
+            onNextEpisodeClick={onNextEpisodeClick} // Added
           />
           <Buttons.Mute tooltipPlacement="top" />
           <Sliders.Volume />
@@ -102,9 +107,9 @@ export function VideoLayout({ groupedEp, thumbnails, subtitles }: VideoLayoutPro
           <Titleb />
           <div className={styles.spacer} />
           <Buttons.Caption tooltipPlacement="top"/>
-          {/* <Buttons.Download tooltipPlacement='top'/> */}
+          {/* Removed commented out Buttons.Download */}
           <Menus.Settings placement="top end" tooltipPlacement="top end" subtitles={subtitles}/>
-          {/* <Buttons.ChromeCast tooltipPlacement='top'/> */}
+          {/* Removed commented out Buttons.ChromeCast */}
           <Buttons.PIP tooltipPlacement="top" />
           <Buttons.Fullscreen tooltipPlacement="top end" />
         </Controls.Group>

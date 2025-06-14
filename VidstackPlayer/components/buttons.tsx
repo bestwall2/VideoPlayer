@@ -1,7 +1,7 @@
 import buttonStyles from "../styles/button.module.css";
 import tooltipStyles from "../styles/tooltip.module.css";
-import { useNowPlaying, useDataInfo } from "@/lib/store";
-import { useStore } from "zustand";
+// import { useNowPlaying, useDataInfo } from "@/lib/store"; // Removed
+// import { useStore } from "zustand"; // Removed
 import {
   CaptionButton,
   FullscreenButton,
@@ -38,13 +38,14 @@ import {
   ChromecastIcon,
   AirPlayIcon,
 } from "@vidstack/react/icons";
-import { useRouter } from "next-nprogress-bar";
+// import { useRouter } from "next-nprogress-bar"; // Removed
 
 export interface MediaButtonProps {
   tooltipPlacement: TooltipPlacement;
   offset?: number | undefined;
   groupedEp?: any;
   host?: boolean;
+  // Add new props here if they become general, for now, add to specific components
 }
 
 export function Play({ tooltipPlacement, offset }: MediaButtonProps) {
@@ -123,14 +124,18 @@ export function NextEpisode({
   tooltipPlacement,
   offset,
   groupedEp,
-}: MediaButtonProps) {
-  const router = useRouter();
-  const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
-  const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
+  onNextEpisodeClick, // Added
+}: MediaButtonProps & { onNextEpisodeClick?: () => void }) { // Added onNextEpisodeClick
+  // const router = useRouter();
+  // const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
+  // const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
   function handleNext() {
-    router.push(
-      `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.nextep?.id || groupedEp?.nextep?.episodeId}&ep=${groupedEp?.nextep?.number}&type=${nowPlaying?.subtype}`
-    );
+    // router.push(
+    //   `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.nextep?.id || groupedEp?.nextep?.episodeId}&ep=${groupedEp?.nextep?.number}&type=${nowPlaying?.subtype}`
+    // );
+    if (onNextEpisodeClick) {
+      onNextEpisodeClick();
+    }
   }
 
   return (
@@ -139,7 +144,7 @@ export function NextEpisode({
         <Tooltip.Trigger asChild>
           <div
             onClick={handleNext}
-            onTouchEnd={handleNext}
+            // onTouchEnd={handleNext} // onClick should suffice for touch devices too
             className={`play-button ${buttonStyles.button}`}
           >
             <NextIcon className="w-7 h-7" />
@@ -161,14 +166,18 @@ export function PreviousEpisode({
   tooltipPlacement,
   offset,
   groupedEp,
-}: MediaButtonProps) {
-  const router = useRouter();
-  const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
-  const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
+  onPreviousEpisodeClick, // Added
+}: MediaButtonProps & { onPreviousEpisodeClick?: () => void }) { // Added onPreviousEpisodeClick
+  // const router = useRouter();
+  // const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
+  // const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
   function handlePrev() {
-    router.push(
-      `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.previousep?.id || groupedEp?.previousep?.episodeId}&ep=${groupedEp?.previousep?.number}&type=${nowPlaying?.subtype}`
-    );
+    // router.push(
+    //   `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.previousep?.id || groupedEp?.previousep?.episodeId}&ep=${groupedEp?.previousep?.number}&type=${nowPlaying?.subtype}`
+    // );
+    if (onPreviousEpisodeClick) {
+      onPreviousEpisodeClick();
+    }
   }
 
   return (
@@ -177,7 +186,7 @@ export function PreviousEpisode({
         <Tooltip.Trigger>
           <div
             onClick={handlePrev}
-            onTouchEnd={handlePrev}
+            // onTouchEnd={handlePrev} // onClick should suffice
             className={`play-button mt-[0px] ${buttonStyles.button}`}
           >
             <PreviousIcon className="w-7 h-7" />
@@ -299,20 +308,24 @@ export function PIP({ tooltipPlacement, offset }: MediaButtonProps) {
 export function PlayNextButton({
   tooltipPlacement,
   groupedEp,
-}: MediaButtonProps) {
+  onNextEpisodeClick, // Added
+}: MediaButtonProps & { onNextEpisodeClick?: () => void }) { // Added onNextEpisodeClick
   // const remote = useMediaRemote();
-  const router = useRouter();
-  const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
-  const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
+  // const router = useRouter();
+  // const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
+  // const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
   return (
     <button
       // title="Next Ep"
       type="button"
       onClick={() => {
-        if (groupedEp?.nextep) {
-          router.push(
-            `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.nextep?.id || groupedEp?.nextep?.episodeId}&ep=${groupedEp?.nextep?.number}&type=${nowPlaying?.subtype}`
-          );
+        // if (groupedEp?.nextep) { // Conditional rendering is still good
+        //   router.push(
+        //     `/anime/watch?id=${dataInfo?.id}&host=${nowPlaying?.provider}&epid=${groupedEp?.nextep?.id || groupedEp?.nextep?.episodeId}&ep=${groupedEp?.nextep?.number}&type=${nowPlaying?.subtype}`
+        //   );
+        // }
+        if (groupedEp?.nextep && onNextEpisodeClick) { // Ensure nextep exists before calling
+          onNextEpisodeClick();
         }
       }}
       className="nextbtn hidden absolute bottom-[70px] sm:bottom-[83px] text-[15px] right-4 z-[40] bg-white text-black py-2 px-3 rounded-[4px] font-medium"
@@ -383,41 +396,3 @@ export function AirPlay({ tooltipPlacement, offset }: MediaButtonProps) {
     </Tooltip.Root>
   );
 }
-
-// export function Download({
-//   tooltipPlacement,
-//   offset,
-//   groupedEp
-// }: MediaButtonProps) {
-//   const router = useRouter();
-// const nowPlaying = useStore(useNowPlaying, (state) => state.nowPlaying);
-// const dataInfo = useStore(useDataInfo, (state) => state.dataInfo);
-//   function handleDownload() {
-//     router.push(
-//       `${nowPlaying.download}`
-//     );
-//   }
-
-//   return (
-//     nowPlaying?.download && (
-//       <Tooltip.Root>
-//         <Tooltip.Trigger asChild>
-//           <div
-//             onClick={handleDownload}
-//             onTouchEnd={handleDownload}
-//             className={`play-button ${buttonStyles.button}`}
-//           >
-//           <DownloadIcon/>
-//           </div>
-//         </Tooltip.Trigger>
-//         <Tooltip.Content
-//           offset={offset}
-//           className={`${tooltipStyles.tooltip} parent-data-[open]:hidden`}
-//           placement={tooltipPlacement}
-//         >
-//           Download Episode
-//         </Tooltip.Content>
-//       </Tooltip.Root>
-//     )
-//   );
-// }
