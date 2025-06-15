@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import type { ReactNode } from 'react';
 
@@ -27,19 +26,18 @@ import {
 import buttonStyles from '../styles/button.module.css';
 import styles from '../styles/menu.module.css';
 import tooltipStyles from '../styles/tooltip.module.css';
-import { useSettings } from '@/lib/store';
-import { useStore } from 'zustand';
+// import { useSettings } from '@/lib/store'; // Removed
+// import { useStore } from 'zustand'; // Removed
 
 export interface SettingsProps {
   placement: MenuPlacement;
   tooltipPlacement: TooltipPlacement;
-  offset?: Number;
+  // offset?: Number; // Removed unused prop
   subtitles?: any
 }
 
 export const menuClass =
 'z-30 flex cust-scroll h-[var(--menu-height)] max-h-[180px] lg:max-h-[400px] min-w-[260px] flex-col overflow-y-auto overscroll-y-contain rounded-md border border-white/10 bg-black p-1 font-sans text-[15px] font-medium outline-none backdrop-blur-sm transition-[height] duration-300 will-change-[height] data-[resizing]:overflow-hidden';
-// 'animate-out fade-out slide-out-to-bottom-2 data-[open]:animate-in data-[open]:fade-in data-[open]:slide-in-from-bottom-4 flex h-[var(--menu-height)] max-h-[400px] min-w-[260px] flex-col overflow-y-auto overscroll-y-contain rounded-md border border-white/10 bg-black/95 p-2.5 font-sans text-[15px] font-medium outline-none backdrop-blur-sm transition-[height] duration-300 will-change-[height] data-[resizing]:overflow-hidden';
 
 export function Settings({ placement, tooltipPlacement, subtitles }: SettingsProps) {
 
@@ -59,7 +57,6 @@ export function Settings({ placement, tooltipPlacement, subtitles }: SettingsPro
         Settings
       </Tooltip.Content>
     </Tooltip.Root>
-      {/* <Menu.Portal disabled="fullscreen" > */}
       <Menu.Content className={menuClass} placement={placement}>
       <AutoPlay />
         <AutoNext />
@@ -129,50 +126,38 @@ function CaptionSubmenu() {
 
 
 function AutoPlay() {
-  const [options, setOptions] = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
-  const settings = useStore(useSettings, (state) => state.settings);
+  // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
   return (
     <Menu.Root>
       <SubmenuButton
         label="Autoplay Video"
-        hint={
-          settings?.autoplay !== undefined
-            ? options.find((option) => option.value === settings?.autoplay)?.label
-            : options.find((option) => option.selected)?.label
-        }
+        hint={"On"} // Default hint
         icon={SettingsSwitchIcon}
       />
       <Menu.Content className={styles.submenu}>
         <Menu.RadioGroup
           className={styles.radioGroup}
-          value={settings?.autoplay !== undefined ? settings?.autoplay.toString() : "true"}
-          onChange={(value) => {
-            const boolValue = value === "true"; // Parse string to boolean
-            setOptions((options) =>
-              options.map((option) =>
-                option.value === boolValue
-                  ? { ...option, selected: true }
-                  : { ...option, selected: false }
-              )
-            );
-            useSettings.setState({ settings: { ...useSettings.getState().settings, autoplay: boolValue } })
-          }}
+          value={"true"} // Default value
+          // onChange={(value) => { // Removed onChange logic
+          //   const boolValue = value === "true";
+          //   setOptions((options) =>
+          //     options.map((option) =>
+          //       option.value === boolValue
+          //         ? { ...option, selected: true }
+          //         : { ...option, selected: false }
+          //     )
+          //   );
+          //   // useSettings.setState({ settings: { ...useSettings.getState().settings, autoplay: boolValue } })
+          // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}> {/* Convert boolean to string */}
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
@@ -184,50 +169,38 @@ function AutoPlay() {
 
 
 function AutoNext() {
-  const [options, setOptions] = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
-  const settings = useStore(useSettings, (state) => state.settings);
+  // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
   return (
     <Menu.Root>
       <SubmenuButton
         label="Autoplay Next"
-        hint={
-          settings?.autonext !== undefined
-            ? options.find((option) => option.value === settings?.autonext)?.label
-            : options.find((option) => option.selected)?.label
-        }
+        hint={"On"} // Default hint
         icon={SettingsSwitchIcon}
       />
       <Menu.Content className={styles.submenu}>
         <Menu.RadioGroup
           className={styles.radioGroup}
-          value={settings?.autonext !== undefined ? settings?.autonext.toString() : "true"}
-          onChange={(value) => {
-            const boolValue = value === "true"; // Parse string to boolean
-            setOptions((options) =>
-              options.map((option) =>
-                option.value === boolValue
-                  ? { ...option, selected: true }
-                  : { ...option, selected: false }
-              )
-            );
-            useSettings.setState({ settings: { ...useSettings.getState().settings, autonext: boolValue } })
-          }}
+          value={"true"} // Default value
+          // onChange={(value) => { // Removed onChange logic
+          //   const boolValue = value === "true";
+          //   setOptions((options) =>
+          //     options.map((option) =>
+          //       option.value === boolValue
+          //         ? { ...option, selected: true }
+          //         : { ...option, selected: false }
+          //     )
+          //   );
+          //   // useSettings.setState({ settings: { ...useSettings.getState().settings, autonext: boolValue } })
+          // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}> {/* Convert boolean to string */}
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
@@ -238,50 +211,38 @@ function AutoNext() {
 }
 
 function AutoSkip() {
-  const [options, setOptions] = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
-  const settings = useStore(useSettings, (state) => state.settings);
+  // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
   return (
     <Menu.Root>
       <SubmenuButton
         label="AutoSkip"
-        hint={
-          settings?.autoskip !== undefined
-            ? options.find((option) => option.value === settings?.autoskip)?.label
-            : options.find((option) => option.selected)?.label
-        }
+        hint={"On"} // Default hint
         icon={SettingsSwitchIcon}
       />
       <Menu.Content className={styles.submenu}>
         <Menu.RadioGroup
           className={styles.radioGroup}
-          value={settings?.autoskip !== undefined ? settings?.autoskip.toString() : "true"}
-          onChange={(value) => {
-            const boolValue = value === "true"; // Parse string to boolean
-            setOptions((options) =>
-              options.map((option) =>
-                option.value === boolValue
-                  ? { ...option, selected: true }
-                  : { ...option, selected: false }
-              )
-            );
-            useSettings.setState({ settings: { ...useSettings.getState().settings, autoskip: boolValue } })
-          }}
+          value={"true"} // Default value
+          // onChange={(value) => { // Removed onChange logic
+          //   const boolValue = value === "true";
+          //   setOptions((options) =>
+          //     options.map((option) =>
+          //       option.value === boolValue
+          //         ? { ...option, selected: true }
+          //         : { ...option, selected: false }
+          //     )
+          //   );
+          //   // useSettings.setState({ settings: { ...useSettings.getState().settings, autoskip: boolValue } })
+          // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}> {/* Convert boolean to string */}
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
