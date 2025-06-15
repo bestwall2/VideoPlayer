@@ -3,11 +3,11 @@ import chapterTitleStyles from '../../styles/chapter-title.module.css';
 import styles from '../../styles/video-layout.module.css';
 import { Captions, Controls, Gesture, Spinner } from '@vidstack/react';
 
-import * as Buttons from '../buttons.tsx';
-import * as Menus from '../menus.tsx';
-import * as Sliders from '../sliders.tsx';
-import { Titleb } from '../title.tsx';
-import { TimeGroup } from '../time-group.tsx';
+import * as Buttons from '../../buttons.tsx';
+import * as Menus from '../../menus.tsx';
+import * as Sliders from '../../sliders.tsx';
+import { Titleb } from '../../title.tsx';
+import { TimeGroup } from '../../time-group.tsx';
 
 export interface VideoLayoutProps {
   groupedEp?: any;

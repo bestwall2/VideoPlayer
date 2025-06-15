@@ -28,18 +28,11 @@ function MyVideoPage() {
   // Example: Load initial time for this video if you were managing it externally
   useEffect(() => {
     // This is just a placeholder. In a real app, you might fetch this from an API or a different localStorage key.
-    // const savedProgress = parseFloat(localStorage.getItem(`custom-video-progress-${currentVideo.videoId}`)) || 0;
-    // if (savedProgress > 5) {
-    //     setExternalInitialTime(savedProgress);
-    // } else {
-    //     setExternalInitialTime(0);
-    // }
   }, [currentVideo.videoId]);
 
   const handleProgressUpdate = (currentTime, duration) => {
     console.log(`Parent received progress: VideoID: ${currentVideo.videoId}, Time: ${currentTime}, Duration: ${duration}`);
     // Example: Save progress to your own backend or a different localStorage schema
-    // localStorage.setItem(`custom-video-progress-${currentVideo.videoId}`, currentTime.toString());
 
     // Note: The player itself saves progress to localStorage using the video 'src' as the key.
     // The `onProgressUpdate` callback is for applications that need to sync this progress elsewhere
@@ -51,21 +44,12 @@ function MyVideoPage() {
     console.log(`Parent received: Video ${currentVideo.videoId} finished!`);
     // Implement logic for what happens when video ends.
     // For example, navigate to next video, show completion screen, etc.
-    // handleNextEpisode(); // Uncomment if you want to automatically play the next episode.
   };
 
   const handleNextEpisode = () => {
     console.log("Parent: Next episode requested");
     // Implement logic to load and play the next episode/video
     // Example:
-    // setCurrentVideo({
-    //   src: "https://stream.mux.com/new-video-id/high.m3u8",
-    //   videoId: 'uniqueVideoId456',
-    //   subtitles: [ ... ],
-    //   skiptimes: [ ... ],
-    //   thumbnails: '...'
-    // });
-    // setExternalInitialTime(0); // Reset initial time for the new video
     alert("Next episode functionality to be implemented by parent application.");
   };
 
@@ -73,14 +57,6 @@ function MyVideoPage() {
     console.log("Parent: Previous episode requested");
     // Implement logic to load and play the previous episode/video
     // Example:
-    // setCurrentVideo({
-    //   src: "https://stream.mux.com/prev-video-id/high.m3u8",
-    //   videoId: 'uniqueVideoId789',
-    //   subtitles: [ ... ],
-    //   skiptimes: [ ... ],
-    //   thumbnails: '...'
-    // });
-    // setExternalInitialTime(0); // Reset initial time for the new video
     alert("Previous episode functionality to be implemented by parent application.");
   };
 
@@ -105,8 +81,6 @@ function MyVideoPage() {
         onPlaybackEnded={handlePlaybackEnded}
         onNextEpisodeClick={handleNextEpisode}
         onPreviousEpisodeClick={handlePreviousEpisode}
-        // Pass groupedEp to VidstackPlayer/layout/video-layout.tsx for UI button visibility control
-        // groupedEp={groupedEpForPlayerUI}
       />
     </div>
   );
