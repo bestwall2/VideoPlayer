@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import type { ReactNode } from 'react';
 
@@ -127,19 +126,10 @@ function CaptionSubmenu() {
 
 
 function AutoPlay() {
-  // const [options, setOptions] = React.useState([ // setOptions is unused
-  const options = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
   // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
@@ -167,7 +157,7 @@ function AutoPlay() {
           // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}>
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
@@ -179,19 +169,10 @@ function AutoPlay() {
 
 
 function AutoNext() {
-  // const [options, setOptions] = React.useState([ // setOptions is unused
-  const options = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
   // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
@@ -219,7 +200,7 @@ function AutoNext() {
           // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}>
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
@@ -230,19 +211,10 @@ function AutoNext() {
 }
 
 function AutoSkip() {
-  // const [options, setOptions] = React.useState([ // setOptions is unused
-  const options = React.useState([
-    {
-      label: "On",
-      value: true,
-      selected: false,
-    },
-    {
-      label: "Off",
-      value: false,
-      selected: true,
-    },
-  ]);
+  const options = [
+    { label: "On", value: "true" },
+    { label: "Off", value: "false" },
+  ];
 
   // const settings = useStore(useSettings, (state) => state.settings); // Removed
 
@@ -270,7 +242,7 @@ function AutoSkip() {
           // }}
         >
           {options.map((option) => (
-            <Radio key={option.label} value={option.value.toString()}>
+            <Radio key={option.label} value={option.value}>
               {option.label}
             </Radio>
           ))}
